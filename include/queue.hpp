@@ -61,13 +61,18 @@ auto ForwardList<T>::insert(ForwardList*& list, T val) -> void{
 
 template <typename T>
 auto ForwardList<T>::ForwardList_del(ForwardList*& list) -> void{
-    while (list->first != nullptr) {
-    Node<T> *temp = list->first->next;
+  if (list->first==nullptr) return;
+    Node<T> *curr= list->first;
+    if (curr->next==nullptr) {
+        delete list->first;
+        list->first=nullptr;
+        list->last= nullptr;
+        return;
+    }
+    curr=list->first->next;
     delete list->first;
-    list->first = temp;
-    
-  }
-  list->last = nullptr;
+    list->first= curr;
+    return;
 }
 
 template <typename T>
@@ -148,7 +153,7 @@ auto Queue<T>::front() -> T&{
         list->first= curr;
         list->last=curr;
     }
-    else return *&list->first->data;
+    return *&list->first->data;
 };
 
 template <typename T>
@@ -184,14 +189,18 @@ Queue<T>::~Queue(){
 
 template <typename T>
 std::ostream& operator<< (std::ostream& file, Queue<T>& Q){
-    if (Q.list->first == nullptr){
-    file<<"empty list";
-    return file;
+    Node<T> *curr= Q.list->first;
+    if (curr==nullptr) {
+        file<<"Error!!!";
+        return file;
     }
-    Node<T>* curr = Q.list->first;
-    while(curr != nullptr){
-        file << curr->data << " ";
-        curr = curr->next;
+    while (1) {
+        if (curr->next!=nullptr) file<< curr->data << " ";
+        else {
+            file<< curr->data;
+            break;
+        }
+        curr=curr->next;
     }
     return file;
 };
