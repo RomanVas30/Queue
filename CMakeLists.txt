@@ -17,20 +17,7 @@ set(${PROJECT_NAME}_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/sources/queue.cpp")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
-add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
-
-if(BUILD_TESTS)
-  hunter_add_package(Catch)
-  find_package(Catch CONFIG REQUIRED)
-
-  enable_testing()
-
-  file(GLOB ${PROJECT_NAME}_TEST_SOURCES tests/*.cpp)
-  add_executable(tests ${${PROJECT_NAME}_TEST_SOURCES})
-  target_link_libraries(tests ${PROJECT_NAME} Catch::Catch )
-
-  add_test(NAME test_name COMMAND tests "-s" "-r" "compact" "--use-colour" "yes") 
-endif()
+add_library(${PROJECT_NAME}  ${${PROJECT_NAME}_SOURCES})
 
 if(BUILD_EXAMPLES)
     file(GLOB EXAMPLE_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/examples/*.cpp")

@@ -2,16 +2,12 @@
 
 int main() {
     Queue <int> q1;
-    
     Queue <int> q2 = {1, 2, 3, 4};
     Queue <int> q3 {q2};
-    
     std::cout << q2 << std::endl;
     std::cout << q3 << std::endl;
-    
     q1.swap(q3);
     std::cout << q1 << std::endl;
-    
     std::cout << boolalpha
     
     << q3.empty()<< endl;
